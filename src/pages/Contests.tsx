@@ -1,42 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Timer, Trophy, History } from 'lucide-react';
+import axiosClient from '../axios-client';
 
 const Contests = () => {
   const [activeTab, setActiveTab] = useState<'ongoing' | 'past'>('ongoing');
+  const [contests, setContests] = useState({ ongoing: [], past: [] });
   const navigate = useNavigate();
 
-  const mockContests = {
-    ongoing: [
-      {
-        id: 1,
-        title: "Spring Baby Stars 2024",
-        participants: 24,
-        endsIn: "2d 5h",
-        image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=2940"
-      },
-      {
-        id: 2,
-        title: "Cutest Smile Contest",
-        participants: 18,
-        endsIn: "5d 12h",
-        image: "https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&q=80&w=2940"
-      }
-    ],
-    past: [
-      {
-        id: 3,
-        title: "Winter Wonderland 2023",
-        participants: 32,
-        winner: "Baby Emma",
-        image: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&q=80&w=2940"
-      }
-    ]
-  };
+  useEffect(() => {
+    axiosClient.get('/contests/list').then((response) => {
+      console.log("res", response);
+      
+      setContests(response);
+    });
+  }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="flex justify-center space-x-4 mb-8">
         <button
           onClick={() => setActiveTab('ongoing')}
@@ -67,8 +49,8 @@ const Contests = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {activeTab === 'ongoing' ? (
-          mockContests.ongoing.map((contest) => (
+        {activeTab === 'ongoing' && contests.ongoing.length > 0 ? (
+          contests.ongoing.map((contest) => (
             <motion.div
               key={contest.id}
               initial={{ opacity: 0, y: 20 }}
@@ -91,7 +73,7 @@ const Contests = () => {
                 </div>
                 <div className="mt-6 flex space-x-4">
                   <button
-                    onClick={() => navigate(`/contest/${contest.id}`)}
+                    onClick={() => navigate(`/contest/${contest.id}?contestName=${contest.title}`)}
                     className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-medium hover:opacity-90 transition-opacity"
                   >
                     View Contest
@@ -106,8 +88,8 @@ const Contests = () => {
               </div>
             </motion.div>
           ))
-        ) : (
-          mockContests.past.map((contest) => (
+        ) : activeTab === 'past' && contests.past.length > 0 ? (
+          contests.past.map((contest) => (
             <motion.div
               key={contest.id}
               initial={{ opacity: 0, y: 20 }}
@@ -132,7 +114,7 @@ const Contests = () => {
                   <span className="text-yellow-500 font-medium">Winner: {contest.winner}</span>
                 </div>
                 <button
-                  onClick={() => navigate(`/contest/${contest.id}`)}
+                  onClick={() => navigate(`/leaderboard/${contest.id}`)}
                   className="mt-6 w-full px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full font-medium hover:opacity-90 transition-opacity"
                 >
                   View Results
@@ -140,6 +122,8 @@ const Contests = () => {
               </div>
             </motion.div>
           ))
+        ) : (
+          <p className="text-center text-gray-600 col-span-3">No contests available</p>
         )}
       </div>
     </div>

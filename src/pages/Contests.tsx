@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Timer, Trophy, History } from "lucide-react";
 import axiosClient from "../axios-client";
+import { logPageView } from "../analytics";
 
 const Contests = () => {
   const [activeTab, setActiveTab] = useState<"ongoing" | "past">("ongoing");
   const [contests, setContests] = useState({ ongoing: [], past: [] });
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
 
   useEffect(() => {
     axiosClient.get("/contests/list").then((response) => {

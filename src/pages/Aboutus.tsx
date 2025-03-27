@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Instagram } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { logPageView } from "../analytics";
 
 const AboutUs = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 text-center">
       {/* Heading */}
@@ -21,8 +28,8 @@ const AboutUs = () => {
       <motion.div whileHover={{ scale: 1.05 }} className="mt-8 bg-white p-6 rounded-xl shadow-md backdrop-blur-md bg-opacity-80">
         <h2 className="text-2xl font-semibold text-gray-800">How Our Baby Contest Works?</h2>
         <p className="mt-3 text-gray-600">
-          ✨ Upload your baby's cutest photo 📸 ✨ Share the unique contest link with friends & family ✨ Each person can vote only once
-          🗳️ ✨ Top 3 winners receive amazing gifts! 🎁🎉
+          ✨ Upload your baby's cutest photo 📸 ✨ Share the unique contest link with friends & family ✨ Each person can vote only once 🗳️ ✨ Top 3
+          winners receive amazing gifts! 🎁🎉
         </p>
       </motion.div>
 

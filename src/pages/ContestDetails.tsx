@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart, Share2, Trophy, Check, Search, ArrowLeft } from "lucide-react";
 import ShareModal from "../components/ShareModal";
 import SuccessModal from "../components/SuccessModal";
 import axiosClient from "../axios-client";
 import { generateVoteMessage } from "../utils";
+import { logPageView } from "../analytics";
 
 const ContestDetails = () => {
   const { contestId } = useParams();
@@ -18,6 +19,12 @@ const ContestDetails = () => {
   const [babies, setBabies] = useState<any[]>([]);
   const [searchParams] = useSearchParams();
   const contestName = searchParams.get("contestName");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
 
   const fetchParticipants = async () => {
     const response = await axiosClient.get(`/participants/${contestId}`);

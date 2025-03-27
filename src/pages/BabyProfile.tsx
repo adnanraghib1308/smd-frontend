@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart, Share2, Timer, Check, Trophy } from "lucide-react";
 import toast from "react-hot-toast";
@@ -8,6 +8,7 @@ import axiosClient from "../axios-client";
 import { generateVoteMessage } from "../utils";
 import SuccessModal from "../components/SuccessModal";
 import { Helmet } from "react-helmet-async";
+import { logPageView } from "../analytics";
 
 const BabyProfile = () => {
   const [searchParams] = useSearchParams();
@@ -18,6 +19,12 @@ const BabyProfile = () => {
   const [timeRemaining, setTimeRemaining] = useState("");
   const [shareModel, setShareModal] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
 
   const fetchParticipant = () => {
     axiosClient.get(`/participants/details/${babyId}`).then((res) => {

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Trophy, Medal, Award, Clock, ArrowLeft } from "lucide-react";
 import axiosClient from "../axios-client";
+import { logPageView } from "../analytics";
 
 const Leaderboard = () => {
   const { contestId } = useParams();
@@ -12,6 +13,12 @@ const Leaderboard = () => {
   const [timeLeft, setTimeLeft] = useState(contestEndTime - new Date().getTime());
   const [babies, setBabies] = useState([]);
   const [contestDetail, setContestDetail] = useState();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {

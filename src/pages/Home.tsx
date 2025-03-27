@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import HowItWorksCard from "../components/HowItWorks";
 import axiosClient from "../axios-client";
+import { logPageView } from "../analytics";
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const [contestId, setContestId] = useState<string|undefined>();
+  const [contestId, setContestId] = useState<string | undefined>();
   const [contestName, setContestName] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
-      const data : {id: string, name: string } = await axiosClient.get('/contests/active');
+      const data: { id: string; name: string } = await axiosClient.get("/contests/active");
       setContestId(data.id);
       setContestName(data.name);
-    })()
-  }, [])
+    })();
+  }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location]);
 
   return (
     <div className="relative w-full min-h-screen">

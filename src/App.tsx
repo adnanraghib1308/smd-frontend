@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -12,6 +12,7 @@ import AboutUs from "./pages/Aboutus";
 import { LoaderProvider } from "./LoaderContext";
 import Loader from "./Loader";
 import axiosClient from "./axios-client";
+import { initGA } from "./analytics";
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
     (async () => {
       await axiosClient.get("/auth/set-cookie");
     })();
+    initGA();
   }, []);
 
   return (

@@ -174,7 +174,7 @@ const Submit = () => {
 
           {/* Parent's Contact Number */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Parent's Contact Number</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Parent's Whatsapp Number</label>
             <input
               type="tel"
               name="parentContactNumber"

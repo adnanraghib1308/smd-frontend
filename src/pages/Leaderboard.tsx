@@ -58,11 +58,14 @@ const Leaderboard = () => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header with countdown */}
       <div className="flex justify-between items-center mb-6 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-md">
-        <h1 className="text-3xl font-bold text-white">🏆 Contest Leaderboard</h1>
+        <h1 className="text-2xl font-bold text-white">🏆 Contest Leaderboard</h1>
         {contestDetail && contestDetail.status === "active" && (
-          <div className="flex items-center text-white">
-            <Clock className="h-6 w-6 mr-2" />
-            <span className="text-lg font-semibold">{formatTime(timeLeft)}</span>
+          <div className="flex flex-col items-center text-white">
+            <span className="text-sm font-medium">Ends in</span> {/* Added this line */}
+            <div className="flex items-center">
+              <Clock className="h-6 w-6 mr-2" />
+              <span className="text-lg font-semibold">{formatTime(timeLeft)}</span>
+            </div>
           </div>
         )}
       </div>

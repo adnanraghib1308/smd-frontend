@@ -43,7 +43,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, babyName }
             </p>
 
             {/* Support Message */}
-            <p className="text-gray-500 mt-4">Join our community and follow us on Instagram for more exciting contests and updates!</p>
+            <p className="text-gray-500 mt-4">Join our community and follow us on Instagram to get update and result of this contest!</p>
 
             {/* Instagram Button */}
             <button
@@ -51,7 +51,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, babyName }
               className="mt-4 w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 px-4 rounded-lg font-medium shadow-md hover:opacity-90 transition"
             >
               <Instagram className="h-5 w-5" />
-              <span>Follow Us on Instagram</span>
+              <span>Follow Us</span>
             </button>
           </motion.div>
         </motion.div>

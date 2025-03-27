@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Share2, Timer, Check } from "lucide-react";
+import { Heart, Share2, Timer, Check, Trophy } from "lucide-react";
 import toast from "react-hot-toast";
 import ShareModal from "../components/ShareModal";
 import axiosClient from "../axios-client";
@@ -67,6 +67,24 @@ const BabyProfile = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+        <motion.h1
+          className="text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text animate-fadeIn"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {babyData.contestName || "Baby Contest"}
+        </motion.h1>
+        <motion.button
+          onClick={() => navigate(`/leaderboard/${contestId}`)}
+          className="flex items-center space-x-3 px-6 py-3 mt-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full font-semibold text-lg shadow-md hover:scale-105 transition-transform"
+          whileHover={{ scale: 1.05 }}
+        >
+          <Trophy className="h-6 w-6" />
+          <span>View Leaderboard</span>
+        </motion.button>
+      </div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="md:flex">
           <div className="md:flex-shrink-0 md:w-1/2 relative">
@@ -114,7 +132,6 @@ const BabyProfile = () => {
                 <Share2 className="h-5 w-5" />
                 <span>Share</span>
               </motion.button>
-
               <button
                 onClick={() => navigate(`/contest/${contestId}`)}
                 className="mt-2 w-full px-6 py-3 bg-gray-100 text-gray-600 rounded-full font-medium hover:bg-gray-200 transition-colors"

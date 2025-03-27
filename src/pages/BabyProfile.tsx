@@ -7,6 +7,7 @@ import ShareModal from "../components/ShareModal";
 import axiosClient from "../axios-client";
 import { generateVoteMessage } from "../utils";
 import SuccessModal from "../components/SuccessModal";
+import { Helmet } from "react-helmet-async";
 
 const BabyProfile = () => {
   const [searchParams] = useSearchParams();
@@ -67,6 +68,12 @@ const BabyProfile = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Helmet>
+        <meta property="og:title" content={babyData.contestName} />
+        <meta property="og:description" content="Join the cutest baby contest and vote for your favorite!" />
+        <meta property="og:image" content={babyData.image} />
+        <meta property="og:site_name" content="Supr Mommy Daddy" />
+      </Helmet>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <motion.h1
           className="text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text animate-fadeIn"

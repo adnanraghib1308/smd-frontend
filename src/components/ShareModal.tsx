@@ -20,8 +20,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, message, share
     window.open("instagram://story-camera", "_blank");
   };
 
-  const handleInstagramPostShare = () => {
-    window.open("https://instagram.com", "_blank");
+  const handleInstagramDMShare = () => {
+    window.open(`https://www.instagram.com/direct/inbox/`, "_blank");
   };
 
   return (
@@ -83,13 +83,13 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, message, share
                 <span className="text-gray-700">Share on Instagram Story</span>
               </button>
 
-              {/* Instagram Post Share */}
+              {/* Instagram DM Share */}
               <button
-                onClick={handleInstagramPostShare}
+                onClick={handleInstagramDMShare}
                 className="w-full flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors"
               >
                 <Instagram className="h-5 w-5 text-pink-500" />
-                <span className="text-gray-700">Share as Instagram Post</span>
+                <span className="text-gray-700">Share via Instagram DM</span>
               </button>
             </div>
           </motion.div>

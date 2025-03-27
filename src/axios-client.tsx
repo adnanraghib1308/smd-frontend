@@ -15,7 +15,6 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     window.dispatchEvent(new Event("startLoading")); // Trigger loading event
-    console.log("Cookies:", document.cookie);
     return config;
   },
   (error) => {

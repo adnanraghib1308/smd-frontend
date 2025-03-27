@@ -23,13 +23,13 @@ const Leaderboard = () => {
   }, [contestId]);
 
   useEffect(() => {
-    if(contestDetail && contestDetail.endDate) {
-      const ed = new Date(contestDetail.endDate)
+    if (contestDetail && contestDetail.endDate) {
+      const ed = new Date(contestDetail.endDate);
       const timer = setInterval(() => {
-      setTimeLeft(ed - new Date().getTime());
-    }, 1000);
+        setTimeLeft(ed - new Date().getTime());
+      }, 1000);
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
     }
   }, [contestDetail]);
 
@@ -59,25 +59,29 @@ const Leaderboard = () => {
       {/* Header with countdown */}
       <div className="flex justify-between items-center mb-6 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-md">
         <h1 className="text-3xl font-bold text-white">🏆 Contest Leaderboard</h1>
-        {contestDetail && contestDetail.status === "active" && <div className="flex items-center text-white">
-          <Clock className="h-6 w-6 mr-2" />
-          <span className="text-lg font-semibold">{formatTime(timeLeft)}</span>
-        </div>}
+        {contestDetail && contestDetail.status === "active" && (
+          <div className="flex items-center text-white">
+            <Clock className="h-6 w-6 mr-2" />
+            <span className="text-lg font-semibold">{formatTime(timeLeft)}</span>
+          </div>
+        )}
       </div>
 
       {/* Back to Contest Button */}
-      {<button
-        onClick={() => {
-          if(contestDetail && contestDetail.status === "active" ) {
-            navigate(`/contest/${contestId}`)
-          } else {
-            navigate('/contests')
-          }
-        }}
-        className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-full font-medium hover:bg-gray-200 transition-colors mb-6"
-      >
-        <ArrowLeft className="h-5 w-5" /> Back to Contest
-      </button>}
+      {
+        <button
+          onClick={() => {
+            if (contestDetail && contestDetail.status === "active") {
+              navigate(`/contest/${contestId}`);
+            } else {
+              navigate("/contests");
+            }
+          }}
+          className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-full font-medium hover:bg-gray-200 transition-colors mb-6"
+        >
+          <ArrowLeft className="h-5 w-5" /> Back to Contest
+        </button>
+      }
 
       {/* Leaderboard List */}
       <div className="space-y-4">
@@ -87,7 +91,11 @@ const Leaderboard = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             whileHover={{ scale: 1.02 }}
-            onClick={() => navigate(`/baby?babyId=${baby.id}&contestId=${contestId}`)}
+            onClick={() => {
+              if (contestDetail && contestDetail.status === "active") {
+                navigate(`/baby?babyId=${baby.id}&contestId=${contestId}`);
+              }
+            }}
             className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer flex items-center p-4 transition-transform"
           >
             <div className="flex-shrink-0 w-16 flex items-center justify-center">{getRankIcon(baby.rank)}</div>

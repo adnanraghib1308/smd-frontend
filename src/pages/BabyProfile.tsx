@@ -5,6 +5,8 @@ import { Heart, Share2, Timer, Check } from "lucide-react";
 import toast from "react-hot-toast";
 import ShareModal from "../components/ShareModal";
 import axiosClient from "../axios-client";
+import { generateVoteMessage } from "../utils";
+import SuccessModal from "../components/SuccessModal";
 
 const BabyProfile = () => {
   const [searchParams] = useSearchParams();
@@ -14,12 +16,13 @@ const BabyProfile = () => {
   const [babyData, setBabyData] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState("");
   const [shareModel, setShareModal] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const fetchParticipant = () => {
-    axiosClient.get(`/participants/details/${babyId}`).then(res => {
+    axiosClient.get(`/participants/details/${babyId}`).then((res) => {
       setBabyData(res);
-    })
-  }
+    });
+  };
   useEffect(() => {
     if (babyId) {
       fetchParticipant();
@@ -28,7 +31,7 @@ const BabyProfile = () => {
 
   useEffect(() => {
     if (!babyData || !babyData.contestEndDate) return;
-    
+
     const updateCountdown = () => {
       const now = new Date();
       const timeDiff = new Date(babyData.contestEndDate) - now;
@@ -48,11 +51,11 @@ const BabyProfile = () => {
 
   const handleVote = async () => {
     if (babyData && !babyData.isVoted) {
-      await axiosClient.post('/vote', {
-        participantId: parseInt(babyId)
-      })
+      await axiosClient.post("/vote", {
+        participantId: parseInt(babyId),
+      });
+      setSuccessModalOpen(true);
       fetchParticipant();
-      toast.success("You have voted successfully!!")
     }
   };
 
@@ -127,9 +130,15 @@ const BabyProfile = () => {
           isOpen={shareModel}
           onClose={() => setShareModal(false)}
           shareUrl={`${window.location.origin}/baby?babyId=${babyId}&contestId=${contestId}`}
-          title={`Vote for ${babyData.name} in the Baby Stars Contest! 🌟`}
+          message={generateVoteMessage(
+            babyData.name,
+            babyData.contestName,
+            "Supr Mommy Daddy",
+            `${window.location.origin}/baby?babyId=${babyId}&contestId=${contestId}`
+          )}
         />
       )}
+      {successModalOpen && <SuccessModal isOpen={successModalOpen} onClose={() => setSuccessModalOpen(false)} babyName={babyData.name} />}
     </div>
   );
 };

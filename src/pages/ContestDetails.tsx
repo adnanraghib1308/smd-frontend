@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Share2, Trophy, Check, Search } from "lucide-react";
-import toast from "react-hot-toast";
+import { Heart, Share2, Trophy, Check, Search, ArrowLeft } from "lucide-react";
 import ShareModal from "../components/ShareModal";
+import SuccessModal from "../components/SuccessModal";
 import axiosClient from "../axios-client";
+import { generateVoteMessage } from "../utils";
 
 const ContestDetails = () => {
   const { contestId } = useParams();
@@ -12,10 +13,11 @@ const ContestDetails = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [votedBabies, setVotedBabies] = useState<number[]>([]);
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [selectedBaby, setSelectedBaby] = useState<any>(null);
   const [babies, setBabies] = useState<any[]>([]);
   const [searchParams] = useSearchParams();
-  const contestName = searchParams.get('contestName');
+  const contestName = searchParams.get("contestName");
 
   const fetchParticipants = async () => {
     const response = await axiosClient.get(`/participants/${contestId}`);
@@ -28,10 +30,11 @@ const ContestDetails = () => {
 
   const handleVote = async (baby) => {
     if (!baby.isVote) {
-      await axiosClient.post('/vote', {
-        participantId: baby.id
-      })
-      toast.success("You have voted successfully!!");
+      await axiosClient.post("/vote", {
+        participantId: baby.id,
+      });
+      setSelectedBaby(baby);
+      setSuccessModalOpen(true);
       fetchParticipants();
     }
   };
@@ -49,6 +52,14 @@ const ContestDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <button
+        onClick={() => {
+          navigate(`/contests`);
+        }}
+        className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-full font-medium hover:bg-gray-200 transition-colors mb-6"
+      >
+        <ArrowLeft className="h-5 w-5" /> Back to Contest
+      </button>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <motion.h1
           className="text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text animate-fadeIn"
@@ -130,13 +141,22 @@ const ContestDetails = () => {
         )}
       </div>
 
-      {selectedBaby && (
+      {selectedBaby && shareModalOpen && (
         <ShareModal
           isOpen={shareModalOpen}
           onClose={() => setShareModalOpen(false)}
           shareUrl={`${window.location.origin}/baby?babyId=${selectedBaby.id}&contestId=${contestId}`}
-          title={`Vote for ${selectedBaby.name} in the Baby Stars Contest! 🌟`}
+          message={generateVoteMessage(
+            selectedBaby.name,
+            contestName,
+            "Supr Mommy Daddy",
+            `${window.location.origin}/baby?babyId=${selectedBaby.id}&contestId=${contestId}`
+          )}
         />
+      )}
+
+      {selectedBaby && successModalOpen && (
+        <SuccessModal isOpen={successModalOpen} onClose={() => setSuccessModalOpen(false)} babyName={selectedBaby.name} />
       )}
     </div>
   );

@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Timer, Trophy, History } from 'lucide-react';
-import axiosClient from '../axios-client';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Timer, Trophy, History } from "lucide-react";
+import axiosClient from "../axios-client";
 
 const Contests = () => {
-  const [activeTab, setActiveTab] = useState<'ongoing' | 'past'>('ongoing');
+  const [activeTab, setActiveTab] = useState<"ongoing" | "past">("ongoing");
   const [contests, setContests] = useState({ ongoing: [], past: [] });
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosClient.get('/contests/list').then((response) => {
-      console.log("res", response);
-      
+    axiosClient.get("/contests/list").then((response) => {
       setContests(response);
     });
   }, []);
@@ -21,11 +19,9 @@ const Contests = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="flex justify-center space-x-4 mb-8">
         <button
-          onClick={() => setActiveTab('ongoing')}
+          onClick={() => setActiveTab("ongoing")}
           className={`px-6 py-2 rounded-full font-medium transition-all ${
-            activeTab === 'ongoing'
-              ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-50'
+            activeTab === "ongoing" ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
           }`}
         >
           <div className="flex items-center space-x-2">
@@ -34,11 +30,9 @@ const Contests = () => {
           </div>
         </button>
         <button
-          onClick={() => setActiveTab('past')}
+          onClick={() => setActiveTab("past")}
           className={`px-6 py-2 rounded-full font-medium transition-all ${
-            activeTab === 'past'
-              ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-50'
+            activeTab === "past" ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
           }`}
         >
           <div className="flex items-center space-x-2">
@@ -49,7 +43,7 @@ const Contests = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {activeTab === 'ongoing' && contests.ongoing.length > 0 ? (
+        {activeTab === "ongoing" && contests.ongoing.length > 0 ? (
           contests.ongoing.map((contest) => (
             <motion.div
               key={contest.id}
@@ -59,17 +53,13 @@ const Contests = () => {
               className="bg-white rounded-xl shadow-lg overflow-hidden"
             >
               <div className="h-48 overflow-hidden">
-                <img
-                  src={contest.image}
-                  alt={contest.title}
-                  className="w-full h-full object-cover"
-                />
+                <img src={contest.image} alt={contest.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-800">{contest.title}</h3>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-gray-600">{contest.participants} participants</span>
-                  <span className="text-pink-500 font-medium">Ends in {contest.endsIn}</span>
+                  <span className="text-pink-500 font-medium">Ends {contest.endsIn}</span>
                 </div>
                 <div className="mt-6 flex space-x-4">
                   <button
@@ -88,7 +78,7 @@ const Contests = () => {
               </div>
             </motion.div>
           ))
-        ) : activeTab === 'past' && contests.past.length > 0 ? (
+        ) : activeTab === "past" && contests.past.length > 0 ? (
           contests.past.map((contest) => (
             <motion.div
               key={contest.id}
@@ -98,11 +88,7 @@ const Contests = () => {
               className="bg-white rounded-xl shadow-lg overflow-hidden"
             >
               <div className="h-48 overflow-hidden relative">
-                <img
-                  src={contest.image}
-                  alt={contest.title}
-                  className="w-full h-full object-cover filter brightness-75"
-                />
+                <img src={contest.image} alt={contest.title} className="w-full h-full object-cover filter brightness-75" />
                 <div className="absolute top-4 right-4">
                   <Trophy className="h-8 w-8 text-yellow-400" />
                 </div>

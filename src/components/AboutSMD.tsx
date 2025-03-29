@@ -6,7 +6,7 @@ export default function AboutSuprMommyDaddy() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="max-w-3xl mt-5 mx-auto bg-gradient-to-r from-pink-50 to-purple-100 shadow-xl rounded-3xl p-8 text-gray-900"
+      className="max-w-3xl mt-5 mx-auto bg-gradient-to-r from-pink-50 to-purple-100 shadow-xl rounded-3xl p-4 text-gray-900"
     >
       {/* Who We Are */}
       <motion.h2
@@ -21,7 +21,7 @@ export default function AboutSuprMommyDaddy() {
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-md text-gray-700 text-center leading-relaxed"
+        className="text-md text-gray-700 text-left leading-relaxed"
       >
         <strong>Supr Mommy Daddy</strong> is a **community** where parents can celebrate and nurture their little ones. We provide **expert-backed
         parenting tips**, fun activities, exciting contests, and a **supportive network** of parents sharing their experiences.
@@ -34,8 +34,8 @@ export default function AboutSuprMommyDaddy() {
         transition={{ duration: 0.7, delay: 0.2 }}
         className="mt-8 p-6 bg-white shadow-md rounded-xl"
       >
-        <h3 className="text-xl font-semibold text-purple-700 text-center">🎯 Our Mission</h3>
-        <p className="text-gray-700 text-center mt-2">
+        <h3 className="text-xl font-semibold text-purple-700">🎯 Our Mission</h3>
+        <p className="text-gray-700 text-left mt-2">
           We empower parents to **celebrate parenthood** through **informative content, interactive challenges, and baby contests.** Every child is
           unique, and we ensure every milestone is **extra special.** 💕
         </p>
@@ -49,7 +49,7 @@ export default function AboutSuprMommyDaddy() {
         className="mt-8 p-6 bg-white shadow-md rounded-xl"
       >
         <h3 className="text-xl font-semibold text-pink-600 text-center">💡 What We Offer</h3>
-        <ul className="mt-4 space-y-3 text-gray-700">
+        <ul className="mt-4 space-y-3 text-gray-700 text-left">
           <li>
             ✅ <strong>Parenting Insights:</strong> Expert advice on baby care, development & hacks.
           </li>
@@ -76,7 +76,7 @@ export default function AboutSuprMommyDaddy() {
         className="mt-8 p-6 bg-white shadow-md rounded-xl"
       >
         <h3 className="text-xl font-semibold text-yellow-600 text-center">🏆 Our Baby Contests</h3>
-        <p className="text-gray-700 text-center mt-2">
+        <p className="text-gray-700 text-left mt-2">
           We’ve completed **multiple successful seasons** of our **Online Baby Contest** with overwhelming participation! It’s not just about
           prizes—it’s about **capturing precious memories** & celebrating your baby’s uniqueness. 👶🎉
         </p>

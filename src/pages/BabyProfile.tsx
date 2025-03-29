@@ -8,6 +8,7 @@ import axiosClient from "../axios-client";
 import { generateVoteMessage } from "../utils";
 import SuccessModal from "../components/SuccessModal";
 import { Helmet } from "react-helmet-async";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { logPageView } from "../analytics";
 
 const BabyProfile = () => {
@@ -19,23 +20,30 @@ const BabyProfile = () => {
   const [timeRemaining, setTimeRemaining] = useState("");
   const [shareModel, setShareModal] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [fingerprintId, setFingerprintId] = useState();
 
   const location = useLocation();
 
   useEffect(() => {
     logPageView(location.pathname);
+    const loadFingerprint = async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      setFingerprintId(result.visitorId);
+    };
+    loadFingerprint();
   }, [location]);
 
   const fetchParticipant = () => {
-    axiosClient.get(`/participants/details/${babyId}`).then((res) => {
+    axiosClient.get(`/participants/details/${babyId}?fingerprintId=${fingerprintId}`).then((res) => {
       setBabyData(res);
     });
   };
   useEffect(() => {
-    if (babyId) {
+    if (babyId && fingerprintId) {
       fetchParticipant();
     }
-  }, [babyId]);
+  }, [babyId, fingerprintId]);
 
   useEffect(() => {
     if (!babyData || !babyData.contestEndDate) return;
@@ -61,6 +69,7 @@ const BabyProfile = () => {
     if (babyData && !babyData.isVoted) {
       await axiosClient.post("/vote", {
         participantId: parseInt(babyId),
+        fingerprintId,
       });
       setSuccessModalOpen(true);
       fetchParticipant();

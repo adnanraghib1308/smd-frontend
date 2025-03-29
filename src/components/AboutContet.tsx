@@ -16,7 +16,7 @@ export default function BabyContestCard({ contestId, contestName }) {
       {/* Important Dates */}
       <div className="mt-6 p-4 bg-pink-100 rounded-lg shadow-md">
         <h4 className="text-lg font-semibold text-purple-700">📅 Important Dates</h4>
-        <ul className="text-gray-700 mt-2 space-y-1">
+        <ul className="text-gray-700 mt-2 space-y-1 text-left">
           <li>
             📌 <strong>Registration Opens:</strong> 29th March, 8 AM ⏳
           </li>
@@ -38,7 +38,7 @@ export default function BabyContestCard({ contestId, contestName }) {
       {/* How to Participate */}
       <div className="mt-6 p-4 bg-pink-100 rounded-lg shadow-md">
         <h4 className="text-lg font-semibold text-pink-600">✅ How to Participate?</h4>
-        <ol className="list-decimal list-inside text-gray-700 mt-2 space-y-1">
+        <ol className="list-decimal list-inside text-gray-700 mt-2 space-y-1 text-left">
           <li>Tap on “Join Contest” button to visit the participation form.</li>
           <li>Upload the cutest photo of your little star. 🌟</li>
           <li>Fill in the required details and submit your entry.</li>

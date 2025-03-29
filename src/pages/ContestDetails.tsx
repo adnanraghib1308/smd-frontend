@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart, Share2, Trophy, Check, Search, ArrowLeft } from "lucide-react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import ShareModal from "../components/ShareModal";
 import SuccessModal from "../components/SuccessModal";
 import axiosClient from "../axios-client";
@@ -18,6 +19,7 @@ const ContestDetails = () => {
   const [selectedBaby, setSelectedBaby] = useState<any>(null);
   const [babies, setBabies] = useState<any[]>([]);
   const [searchParams] = useSearchParams();
+  const [fingerprintId, setFingerprintId] = useState();
   const contestName = searchParams.get("contestName");
 
   const location = useLocation();
@@ -27,18 +29,28 @@ const ContestDetails = () => {
   }, [location]);
 
   const fetchParticipants = async () => {
-    const response = await axiosClient.get(`/participants/${contestId}`);
+    const response = await axiosClient.get(`/participants/${contestId}?fingerprintId=${fingerprintId}`);
     setBabies(response);
   };
 
   useEffect(() => {
-    fetchParticipants();
-  }, [contestId]);
+    if (fingerprintId) fetchParticipants();
+  }, [contestId, fingerprintId]);
+
+  useEffect(() => {
+    const loadFingerprint = async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      setFingerprintId(result.visitorId);
+    };
+    loadFingerprint();
+  }, []);
 
   const handleVote = async (baby) => {
     if (!baby.isVote) {
       await axiosClient.post("/vote", {
         participantId: baby.id,
+        fingerprintId,
       });
       setSelectedBaby(baby);
       setSuccessModalOpen(true);

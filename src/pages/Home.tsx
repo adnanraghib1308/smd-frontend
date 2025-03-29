@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import HowItWorksCard from "../components/HowItWorks";
 import axiosClient from "../axios-client";
 import { logPageView } from "../analytics";
+import AboutContest from "../components/AboutContet";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -44,6 +45,8 @@ const Home = () => {
 
           <br />
           <HowItWorksCard contestId={contestId} contestName={contestName} />
+
+          <AboutContest contestId={contestId} contestName={contestName} />
         </motion.div>
       </div>
 

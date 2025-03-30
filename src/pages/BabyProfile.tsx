@@ -10,6 +10,7 @@ import SuccessModal from "../components/SuccessModal";
 import { Helmet } from "react-helmet-async";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { logPageView } from "../analytics";
+import ContestCountdown from "./ContestCountdown";
 
 const BabyProfile = () => {
   const [searchParams] = useSearchParams();
@@ -99,14 +100,18 @@ const BabyProfile = () => {
         >
           {babyData.contestName || "Baby Contest"}
         </motion.h1>
-        <motion.button
-          onClick={() => navigate(`/leaderboard/${contestId}`)}
-          className="flex items-center space-x-3 px-6 py-3 mt-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full font-semibold text-lg shadow-md hover:scale-105 transition-transform"
-          whileHover={{ scale: 1.05 }}
-        >
-          <Trophy className="h-6 w-6" />
-          <span>View Leaderboard</span>
-        </motion.button>
+        {babyData.contestStatus === "active" ? (
+          <motion.button
+            onClick={() => navigate(`/leaderboard/${contestId}`)}
+            className="flex items-center space-x-3 px-6 py-3 mt-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full font-semibold text-lg shadow-md hover:scale-105 transition-transform"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Trophy className="h-6 w-6" />
+            <span>View Leaderboard</span>
+          </motion.button>
+        ) : (
+          <ContestCountdown startDate={babyData.contestStartDate} />
+        )}
       </div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="md:flex">

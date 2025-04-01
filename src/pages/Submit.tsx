@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Upload, Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import ImageCropper from "../components/ImageCropper";
 import axiosClient from "../axios-client";
+import ContestCountdown from "../components/ContestCountdown";
 
 // Utility function to convert base64 to Blob
 const dataURItoBlob = (dataURI: string) => {
@@ -37,6 +38,7 @@ const Submit = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [showCropper, setShowCropper] = useState(false);
+  const [contest, setContest] = useState({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,12 +81,20 @@ const Submit = () => {
     await axiosClient.post("/participants/join", formData);
 
     toast.success("Entry submitted successfully!");
-    navigate(`/contest/${contestId}`);
+    navigate(`/contest/${contestId}?contestName=${contestName}`);
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await axiosClient.get(`/contests/${contestId}`);
+      setContest(data);
+    })();
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-xl shadow-lg p-8">
+      <ContestCountdown startDate={contest.startDate} />
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-xl shadow-lg p-8 mt-3">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Join the Contest</h1>
         <p className="text-lg text-pink-500 mb-8">{contestName}</p>
 

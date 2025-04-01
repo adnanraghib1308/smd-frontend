@@ -10,7 +10,7 @@ import SuccessModal from "../components/SuccessModal";
 import { Helmet } from "react-helmet-async";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { logPageView } from "../analytics";
-import ContestCountdown from "./ContestCountdown";
+import ContestCountdown from "../components/ContestCountdown";
 
 const BabyProfile = () => {
   const [searchParams] = useSearchParams();

@@ -9,7 +9,7 @@ import axiosClient from "../axios-client";
 import { generateVoteMessage } from "../utils";
 import { logPageView } from "../analytics";
 import Countdown from "react-countdown";
-import ContestCountdown from "./ContestCountdown";
+import ContestCountdown from "../components/ContestCountdown";
 
 const ContestDetails = () => {
   const { contestId } = useParams();
@@ -95,7 +95,7 @@ const ContestDetails = () => {
           <motion.div
             className="bg-yellow-100 border-l-4 border-yellow-500 mt-8 text-yellow-800 p-6 rounded-lg shadow-md flex items-center gap-4 mb-6 animate-bounce"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 0.2 }}
             transition={{ duration: 0.5 }}
           >
             <Sparkles className="text-yellow-600 h-8 w-8 animate-spin" />
@@ -104,7 +104,7 @@ const ContestDetails = () => {
         )}
 
         {/* Show Leaderboard button if contest is active, otherwise show countdown */}
-        {contest?.status === "active" ? (
+        {contest?.status === "active" && (
           <motion.button
             onClick={() => navigate(`/leaderboard/${contestId}`)}
             className="flex items-center space-x-3 px-6 py-3 mt-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full font-semibold text-lg shadow-md hover:scale-105 transition-transform"
@@ -113,12 +113,12 @@ const ContestDetails = () => {
             <Trophy className="h-6 w-6" />
             <span>View Leaderboard</span>
           </motion.button>
-        ) : (
-          <ContestCountdown startDate={contest.startDate} />
         )}
       </div>
 
-      <div className="relative mb-6 max-w-md mx-auto">
+      {contest?.status === "upcoming" && <ContestCountdown startDate={contest.startDate} />}
+
+      <div className="relative my-6 max-w-md mx-auto">
         <input
           type="text"
           value={searchQuery}
@@ -177,6 +177,7 @@ const ContestDetails = () => {
           <p className="text-center text-gray-500 col-span-full">No babies found.</p>
         )}
       </div>
+      {successModalOpen && <SuccessModal isOpen={successModalOpen} onClose={() => setSuccessModalOpen(false)} babyName={selectedBaby.name} />}
     </div>
   );
 };

@@ -6,7 +6,7 @@ export default function BabyContestCard({ contestId, contestName }) {
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 text-gray-800">
       <h2 className="text-3xl font-bold text-pink-600">🌟 Supr Mommy Daddy Presents</h2>
-      <h3 className="text-2xl font-semibold text-purple-700 mt-2">The Ultimate Online Baby Contest - Season 4! 🎉</h3>
+      <h3 className="text-2xl font-semibold text-purple-700 mt-2">The Ultimate Online Baby Contest - Season 5! 🎉</h3>
 
       <p className="text-md text-gray-700 mt-4">
         After three heartwarming and successful seasons, we’re back with an even bigger and more exciting <strong>Season 4!</strong> ✨👶 Your little
@@ -18,19 +18,19 @@ export default function BabyContestCard({ contestId, contestName }) {
         <h4 className="text-lg font-semibold text-purple-700">📅 Important Dates</h4>
         <ul className="text-gray-700 mt-2 space-y-1 text-left">
           <li>
-            📌 <strong>Registration Opens:</strong> 29th March, 8 AM ⏳
+            📌 <strong>Registration Opens:</strong> 21st April, 8 AM ⏳
           </li>
           <li>
-            📌 <strong>Registration Closes:</strong> 6th April, 11 PM ❌
+            📌 <strong>Registration Closes:</strong> 25th April, 8 PM ❌
           </li>
           <li>
-            📌 <strong>Voting Begins:</strong> 7th April, 8 AM 🗳️
+            📌 <strong>Voting Begins:</strong> 25th April, 8 PM 🗳️
           </li>
           <li>
-            📌 <strong>Voting Ends:</strong> 9th April, 11 PM 🚨
+            📌 <strong>Voting Ends:</strong> 27th April, 8 PM 🚨
           </li>
           <li>
-            📌 <strong>Results Announcement:</strong> 10th April 🎊
+            📌 <strong>Results Announcement:</strong> 28th April 🎊
           </li>
         </ul>
       </div>

@@ -174,7 +174,7 @@ const ContestDetails = () => {
             </motion.div>
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-full">No babies found.</p>
+          <p className="text-center text-gray-500 col-span-full">No profile found.</p>
         )}
       </div>
       {successModalOpen && <SuccessModal isOpen={successModalOpen} onClose={() => setSuccessModalOpen(false)} babyName={selectedBaby.name} />}

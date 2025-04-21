@@ -9,7 +9,7 @@ export default function BabyContestCard({ contestId, contestName }) {
       <h3 className="text-2xl font-semibold text-purple-700 mt-2">The Ultimate Online Baby Contest - Season 5! 🎉</h3>
 
       <p className="text-md text-gray-700 mt-4">
-        After three heartwarming and successful seasons, we’re back with an even bigger and more exciting <strong>Season 4!</strong> ✨👶 Your little
+        After three heartwarming and successful seasons, we’re back with an even bigger and more exciting <strong>Season 5!</strong> ✨👶 Your little
         star now has another chance to shine and win amazing prizes! 🎁
       </p>
 

@@ -92,7 +92,7 @@ const Submit = () => {
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
       <ContestCountdown startDate={contest.startDate} />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-xl shadow-lg p-8 mt-3">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Join the Contest</h1>

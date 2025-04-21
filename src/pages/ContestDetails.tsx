@@ -83,10 +83,10 @@ const ContestDetails = () => {
 
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <motion.h1
-          className="text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text animate-fadeIn"
-          initial={{ opacity: 0, y: -10 }}
+          className="text-2xl font-semibold bg-gradient-to-r from-pink-300 to-purple-300 text-transparent bg-clip-text"
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           {contestName || "Baby Contest"}
         </motion.h1>

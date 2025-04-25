@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function BabyContestCard({ contestId, contestName }) {
+export default function BabyContestCard({ contestId, contestName, contestStatus }) {
   const navigate = useNavigate();
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 text-gray-800">
@@ -61,7 +61,7 @@ export default function BabyContestCard({ contestId, contestName }) {
         <button
           className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full shadow-lg text-lg w-full md:w-auto"
           onClick={() => {
-            if (!contestId || !contestName) {
+            if (!contestId || !contestName || contestStatus !== "upcoming") {
               toast.error("No ongoing contest right now. Check previous contest!!");
               return;
             }

@@ -3,7 +3,7 @@ import { Trophy, Heart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-const HowItWorksCard = ({ contestId, contestName }) => {
+const HowItWorksCard = ({ contestId, contestName, contestStatus }) => {
   const navigate = useNavigate();
   const steps = [
     {
@@ -12,7 +12,7 @@ const HowItWorksCard = ({ contestId, contestName }) => {
       desc: "Enter your baby in our adorable competitions",
       color: "text-yellow-500",
       onClick: () => {
-        if (!contestId || !contestName) {
+        if (!contestId || !contestName || contestStatus !== "upcoming") {
           toast.error("No ongoing contest right now. Check previous contest!!");
           return;
         }
@@ -25,7 +25,7 @@ const HowItWorksCard = ({ contestId, contestName }) => {
       desc: "Support your favorites and spread the joy",
       color: "text-red-500",
       onClick: () => {
-        if (!contestId) {
+        if (!contestId || contestStatus !== "active") {
           toast.error("No ongoing contest right now. Check previous contest!!");
           return;
         }

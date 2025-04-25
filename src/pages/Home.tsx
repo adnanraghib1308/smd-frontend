@@ -11,12 +11,14 @@ const Home = () => {
 
   const [contestId, setContestId] = useState<string | undefined>();
   const [contestName, setContestName] = useState<string | undefined>();
+  const [contestStatus, setContestStatus] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
-      const data: { id: string; name: string } = await axiosClient.get("/contests/active");
+      const data: { id: string; name: string; status: string } = await axiosClient.get("/contests/active");
       setContestId(data.id);
       setContestName(data.name);
+      setContestStatus(data.status);
     })();
   }, []);
 
@@ -44,9 +46,9 @@ const Home = () => {
           </motion.div>
 
           <br />
-          <HowItWorksCard contestId={contestId} contestName={contestName} />
+          <HowItWorksCard contestId={contestId} contestName={contestName} contestStatus={contestStatus} />
 
-          <AboutContest contestId={contestId} contestName={contestName} />
+          <AboutContest contestId={contestId} contestName={contestName} contestStatus={contestStatus} />
         </motion.div>
       </div>
 
